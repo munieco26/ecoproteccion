@@ -1,0 +1,164 @@
+/* ============================================================
+   ECOPROTECCION — DESIGN SYSTEM
+   Industrial eco-protection storyboard
+   ============================================================ */
+
+@import '@fontsource/big-shoulders-display/400.css';
+@import '@fontsource/big-shoulders-display/700.css';
+@import '@fontsource/big-shoulders-display/800.css';
+@import '@fontsource/big-shoulders-display/900.css';
+@import '@fontsource/familjen-grotesk/400.css';
+@import '@fontsource/familjen-grotesk/500.css';
+@import '@fontsource/familjen-grotesk/600.css';
+@import '@fontsource/familjen-grotesk/700.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/jetbrains-mono/700.css';
+@import 'material-icons/iconfont/filled.css';
+@import 'material-icons/iconfont/outlined.css';
+
+:root {
+  /* Brand */
+  --eco-lime: #7ED321;
+  --eco-lime-glow: #b4ff4a;
+  --eco-green: #2A8A2A;
+  --eco-deep: #0E1A12;
+  --eco-ink: #050805;
+  --eco-bone: #F4F1E8;
+  --eco-cream: #E8E2CF;
+  --eco-rust: #C2492A;
+  --eco-amber: #E8B23A;
+
+  /* Type */
+  --font-display: 'Big Shoulders Display', 'Impact', sans-serif;
+  --font-body: 'Familjen Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+
+  /* Layout */
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --max: 1440px;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background: var(--eco-ink);
+  color: var(--eco-bone);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+#app {
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Film-grain overlay over the whole storyboard */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; border: none; background: none; color: inherit; cursor: pointer; }
+img { display: block; max-width: 100%; }
+
+::selection { background: var(--eco-lime); color: var(--eco-ink); }
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+.container {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--eco-lime);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--eco-lime);
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.body-lg {
+  font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+  line-height: 1.55;
+  color: var(--eco-cream);
+}
+
+/* Hazard tape — diagonal warning stripes */
+.hazard-tape {
+  height: 14px;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--eco-lime) 0,
+    var(--eco-lime) 18px,
+    var(--eco-ink) 18px,
+    var(--eco-ink) 36px
+  );
+}
+
+section { position: relative; }
+
+/* Material Icons helpers */
+.mi {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
+}
+.mi-out {
+  font-family: 'Material Icons Outlined';
+}
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
