@@ -1,5 +1,6 @@
 <script setup>
 import { Motion } from 'motion-v'
+import HexMotif from './HexMotif.vue'
 
 const benefits = [
   {
@@ -8,12 +9,12 @@ const benefits = [
     body: 'Eliminamos focos de infecciones, gérmenes patógenos, virus y bacterias responsables de disentería y gastroenteritis.',
   },
   {
-    icon: 'clean_hands',
+    icon: 'water_drop',
     title: 'Agua de verdad limpia',
     body: 'Removemos depósitos de mugre, manchas de óxido, incrustaciones y materia orgánica acumulada en el fondo del tanque.',
   },
   {
-    icon: 'shower',
+    icon: 'spa',
     title: 'Cuidamos tu piel',
     body: 'Tu piel absorbe lo que el agua trae. Un tanque sucio significa químicos y minerales entrando en tu cuerpo cada ducha.',
   },
@@ -25,154 +26,134 @@ const benefits = [
 ]
 
 const compareRows = [
-  { label: 'Costo', tank: '1×', filter: '5×', tankNote: 'limpieza completa', filterNote: 'mantenimiento + filtros' },
-  { label: 'Frecuencia', tank: '6 meses', filter: '1–3 meses', tankNote: 'desinfecta toda la red', filterNote: 'solo en la canilla' },
-  { label: 'Cobertura', tank: 'Cocina, baño, lavadero', filter: 'Un punto de uso', tankNote: 'todo el hogar', filterNote: 'limitado' },
+  { label: 'Costo',      tank: '1×',                       filter: '5×',                tankNote: 'limpieza completa',    filterNote: 'mantenimiento + filtros' },
+  { label: 'Frecuencia', tank: '6 meses',                  filter: '1–3 meses',         tankNote: 'desinfecta toda la red', filterNote: 'solo en la canilla' },
+  { label: 'Cobertura',  tank: 'Cocina, baño, lavadero',   filter: 'Un punto de uso',   tankNote: 'todo el hogar',         filterNote: 'limitado' },
 ]
 </script>
 
 <template>
   <section id="tanques" class="tanques">
-    <!-- Section header -->
-    <div class="container tanques__head">
-      <Motion
-        as="div"
-        class="act-mark"
-        :initial="{ opacity: 0, x: -40 }"
-        :while-in-view="{ opacity: 1, x: 0 }"
-        :in-view-options="{ once: true, margin: '0px 0px -100px 0px' }"
-        :transition="{ duration: 0.7 }"
-      >
-        <span class="act-mark__num display">01</span>
-        <span class="act-mark__label mono">ACTO PRIMERO</span>
-      </Motion>
+    <HexMotif position="br" variant="thin" :size="220" :opacity="0.5" />
 
-      <div class="tanques__heading">
+    <div class="container">
+      <div class="section-head">
         <Motion
           as="span"
           class="eyebrow"
-          :initial="{ opacity: 0 }"
-          :while-in-view="{ opacity: 1 }"
+          :initial="{ y: 6 }"
+          :while-in-view="{ y: 0 }"
           :in-view-options="{ once: true }"
-          :transition="{ duration: 0.6, delay: 0.1 }"
-        >Limpieza de Tanques de Agua Potable</Motion>
+          :transition="{ duration: 0.6 }"
+        >Limpieza de tanques de agua potable</Motion>
 
         <Motion
           as="h2"
-          class="tanques__title display"
-          :initial="{ opacity: 0, y: 30 }"
-          :while-in-view="{ opacity: 1, y: 0 }"
+          class="section-head__title display"
+          :initial="{ y: 24 }"
+          :while-in-view="{ y: 0 }"
           :in-view-options="{ once: true, margin: '0px 0px -120px 0px' }"
-          :transition="{ duration: 0.8, delay: 0.15 }"
+          :transition="{ duration: 0.8, delay: 0.1 }"
         >
-          Si el agua se queda<br/>
-          quieta, <em>algo crece</em>.
+          Si el agua se queda quieta,<br/>
+          <em>algo crece.</em>
         </Motion>
 
         <Motion
           as="p"
-          class="body-lg tanques__lede"
-          :initial="{ opacity: 0, y: 20 }"
-          :while-in-view="{ opacity: 1, y: 0 }"
+          class="body-lg section-head__lede"
+          :initial="{ y: 16 }"
+          :while-in-view="{ y: 0 }"
           :in-view-options="{ once: true, margin: '0px 0px -100px 0px' }"
-          :transition="{ duration: 0.7, delay: 0.3 }"
+          :transition="{ duration: 0.7, delay: 0.2 }"
         >
-          El agua que toma tu familia se acumula primero en el tanque y luego se ramifica
-          por la cocina, el baño y el lavadero. Limpiar y desinfectar dos veces al año
-          garantiza agua segura en cada punto de uso.
+          El agua que toma tu familia se acumula primero en el tanque y luego se
+          ramifica por la cocina, el baño y el lavadero. Limpiar y desinfectar
+          dos veces al año garantiza agua segura en cada punto de uso.
         </Motion>
       </div>
     </div>
 
-    <!-- Diagram + benefits grid -->
     <div class="container tanques__body">
       <Motion
         class="diagram"
-        :initial="{ opacity: 0, scale: 0.94 }"
-        :while-in-view="{ opacity: 1, scale: 1 }"
-        :in-view-options="{ once: true, margin: '0px 0px -150px 0px' }"
+        :initial="{ y: 30 }"
+        :while-in-view="{ y: 0 }"
+        :in-view-options="{ once: true, margin: '0px 0px -120px 0px' }"
         :transition="{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }"
       >
         <svg viewBox="0 0 320 460" class="diagram__svg" aria-hidden="true">
-          <!-- Sky gradient -->
           <defs>
-            <linearGradient id="water-grad" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stop-color="#7ED321" stop-opacity="0.35"/>
-              <stop offset="100%" stop-color="#7ED321" stop-opacity="0.05"/>
-            </linearGradient>
-            <linearGradient id="tank-grad" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stop-color="#1a2f1d"/>
-              <stop offset="100%" stop-color="#0b1610"/>
+            <linearGradient id="water-fill" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%"  stop-color="#1E7A33" stop-opacity="0.18"/>
+              <stop offset="100%" stop-color="#1E7A33" stop-opacity="0.02"/>
             </linearGradient>
           </defs>
 
           <!-- Tank cap -->
-          <rect x="100" y="60" width="120" height="20" rx="2" fill="#222" stroke="#7ED321" stroke-width="1.5"/>
-          <line x1="120" y1="60" x2="120" y2="80" stroke="#7ED321" stroke-width="1" stroke-dasharray="2 2"/>
-          <line x1="200" y1="60" x2="200" y2="80" stroke="#7ED321" stroke-width="1" stroke-dasharray="2 2"/>
+          <rect x="100" y="60" width="120" height="18" rx="3" fill="#FFFFFF" stroke="#0B1410" stroke-width="1.6"/>
+          <line x1="120" y1="60" x2="120" y2="78" stroke="#1E7A33" stroke-width="1" stroke-dasharray="2 2"/>
+          <line x1="200" y1="60" x2="200" y2="78" stroke="#1E7A33" stroke-width="1" stroke-dasharray="2 2"/>
 
           <!-- Tank body -->
-          <rect x="60" y="80" width="200" height="280" rx="4" fill="url(#tank-grad)" stroke="#7ED321" stroke-width="2"/>
+          <rect x="60" y="78" width="200" height="280" rx="6" fill="#FFFFFF" stroke="#0B1410" stroke-width="1.6"/>
 
-          <!-- Clean water inside -->
-          <rect x="64" y="120" width="192" height="236" fill="url(#water-grad)">
-            <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite"/>
+          <!-- Water -->
+          <rect x="64" y="120" width="192" height="234" rx="3" fill="url(#water-fill)">
+            <animate attributeName="opacity" values="0.75;1;0.75" dur="4s" repeatCount="indefinite"/>
           </rect>
-
-          <!-- Water surface line -->
-          <line x1="64" y1="125" x2="256" y2="125" stroke="#7ED321" stroke-width="1.5" stroke-dasharray="6 4">
-            <animate attributeName="stroke-dashoffset" values="0;-20" dur="3s" repeatCount="indefinite"/>
+          <line x1="64" y1="125" x2="256" y2="125" stroke="#1E7A33" stroke-width="1.5" stroke-dasharray="6 4">
+            <animate attributeName="stroke-dashoffset" values="0;-20" dur="3.5s" repeatCount="indefinite"/>
           </line>
 
-          <!-- Ripples -->
-          <ellipse cx="160" cy="160" rx="60" ry="3" fill="none" stroke="#7ED321" stroke-width="1" opacity="0.4"/>
-          <ellipse cx="160" cy="200" rx="40" ry="2" fill="none" stroke="#7ED321" stroke-width="1" opacity="0.3"/>
+          <ellipse cx="160" cy="160" rx="60" ry="3" fill="none" stroke="#1E7A33" stroke-width="1" opacity="0.45"/>
+          <ellipse cx="160" cy="200" rx="40" ry="2" fill="none" stroke="#1E7A33" stroke-width="1" opacity="0.35"/>
 
           <!-- Output pipe -->
-          <rect x="55" y="320" width="10" height="20" fill="#222" stroke="#7ED321" stroke-width="1.5"/>
-          <rect x="20" y="328" width="40" height="6" fill="#7ED321" opacity="0.4"/>
+          <rect x="55" y="318" width="10" height="20" fill="#FFFFFF" stroke="#0B1410" stroke-width="1.4"/>
+          <rect x="20" y="326" width="40" height="6" fill="#1E7A33" opacity="0.6"/>
 
-          <!-- Water drops -->
-          <g class="drops">
-            <circle cx="20" cy="345" r="3" fill="#7ED321">
+          <!-- Drops -->
+          <g>
+            <circle cx="20" cy="345" r="3" fill="#1E7A33">
               <animate attributeName="cy" values="345;380;345" dur="2s" repeatCount="indefinite"/>
               <animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite"/>
             </circle>
-            <circle cx="35" cy="350" r="2.5" fill="#7ED321">
+            <circle cx="35" cy="350" r="2.5" fill="#1E7A33">
               <animate attributeName="cy" values="350;385;350" dur="2.3s" repeatCount="indefinite" begin="0.4s"/>
               <animate attributeName="opacity" values="1;0;1" dur="2.3s" repeatCount="indefinite" begin="0.4s"/>
             </circle>
           </g>
 
-          <!-- Tank legs -->
-          <rect x="70" y="360" width="6" height="50" fill="#222" stroke="#7ED321" stroke-width="1"/>
-          <rect x="244" y="360" width="6" height="50" fill="#222" stroke="#7ED321" stroke-width="1"/>
-          <rect x="50" y="410" width="220" height="6" fill="#7ED321" opacity="0.6"/>
+          <!-- Legs -->
+          <rect x="70" y="358" width="6" height="50" fill="#0B1410"/>
+          <rect x="244" y="358" width="6" height="50" fill="#0B1410"/>
+          <rect x="50" y="408" width="220" height="5" fill="#0B1410" opacity="0.5"/>
 
           <!-- Labels -->
-          <g font-family="JetBrains Mono" font-size="9" fill="#7ED321" letter-spacing="1.5">
+          <g font-family="IBM Plex Mono" font-size="9" fill="#1E7A33" letter-spacing="1.5">
             <text x="225" y="50">TAPA SELLADA</text>
-            <line x1="225" y1="55" x2="220" y2="70" stroke="#7ED321" stroke-width="0.8"/>
+            <line x1="225" y1="55" x2="220" y2="70" stroke="#1E7A33" stroke-width="0.8"/>
 
             <text x="270" y="135" text-anchor="start">H₂O LIMPIA</text>
-            <line x1="265" y1="132" x2="258" y2="130" stroke="#7ED321" stroke-width="0.8"/>
+            <line x1="265" y1="132" x2="258" y2="130" stroke="#1E7A33" stroke-width="0.8"/>
 
             <text x="270" y="250" text-anchor="start">DESINFECCIÓN</text>
             <text x="270" y="262" text-anchor="start">100%</text>
-            <line x1="265" y1="245" x2="258" y2="240" stroke="#7ED321" stroke-width="0.8"/>
+            <line x1="265" y1="245" x2="258" y2="240" stroke="#1E7A33" stroke-width="0.8"/>
 
-            <text x="-2" y="378" text-anchor="start" fill="#E8E2CF">→ A LA CASA</text>
+            <text x="-2" y="378" text-anchor="start" fill="#5E6660">→ A LA CASA</text>
           </g>
 
-          <!-- Top badge -->
+          <!-- Top check -->
           <g transform="translate(160, 30)">
-            <circle r="14" fill="#7ED321"/>
-            <text font-family="Big Shoulders Display" font-size="14" font-weight="900" fill="#050805" text-anchor="middle" y="5">✓</text>
+            <circle r="14" fill="#1E7A33"/>
+            <path d="M-5 0 L-1 4 L6 -4" fill="none" stroke="#F7F4EC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
           </g>
         </svg>
 
         <div class="diagram__caption mono">
-          FIG. 01 — Estado óptimo post-servicio
+          Fig. 01 · Estado óptimo post-servicio
         </div>
       </Motion>
 
@@ -181,10 +162,10 @@ const compareRows = [
           v-for="(b, i) in benefits"
           :key="b.title"
           class="benefit"
-          :initial="{ opacity: 0, y: 30 }"
-          :while-in-view="{ opacity: 1, y: 0 }"
+          :initial="{ y: 22 }"
+          :while-in-view="{ y: 0 }"
           :in-view-options="{ once: true, margin: '0px 0px -80px 0px' }"
-          :transition="{ duration: 0.6, delay: i * 0.1 }"
+          :transition="{ duration: 0.6, delay: i * 0.08 }"
         >
           <div class="benefit__icon">
             <span class="mi mi-out">{{ b.icon }}</span>
@@ -201,24 +182,22 @@ const compareRows = [
     <div class="container">
       <Motion
         class="compare"
-        :initial="{ opacity: 0, y: 40 }"
-        :while-in-view="{ opacity: 1, y: 0 }"
-        :in-view-options="{ once: true, margin: '0px 0px -120px 0px' }"
+        :initial="{ y: 30 }"
+        :while-in-view="{ y: 0 }"
+        :in-view-options="{ once: true, margin: '0px 0px -100px 0px' }"
         :transition="{ duration: 0.8 }"
       >
         <div class="compare__head">
-          <div class="compare__intro">
-            <span class="eyebrow">¿Tanque o purificador?</span>
-            <h3 class="compare__title display">
-              La cuenta es simple:<br/>
-              <em>limpiar sale 5× menos</em>.
-            </h3>
-            <p>
-              Un purificador filtra el último metro antes de la canilla. Limpiar el tanque
-              desinfecta todo el sistema —cocina, baño, lavadero— al mismo tiempo. Con un
-              servicio se podrían hacer 3 o 4 limpiezas al año.
-            </p>
-          </div>
+          <span class="eyebrow">¿Tanque o purificador?</span>
+          <h3 class="compare__title display">
+            La cuenta es simple:<br/>
+            <em>limpiar sale 5 veces menos.</em>
+          </h3>
+          <p>
+            Un purificador filtra el último metro antes de la canilla. Limpiar el
+            tanque desinfecta todo el sistema —cocina, baño, lavadero— al mismo
+            tiempo. Con un servicio se podrían hacer 3 o 4 limpiezas al año.
+          </p>
         </div>
 
         <div class="compare__table">
@@ -246,225 +225,151 @@ const compareRows = [
 
 <style scoped>
 .tanques {
-  padding: 7rem 0 6rem;
-  background: var(--eco-ink);
+  padding: clamp(5rem, 9vw, 7.5rem) 0 7rem;
+  background: var(--eco-bone);
   position: relative;
-}
-.tanques::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(126, 211, 33, 0.4), transparent);
-}
-
-.tanques__head {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 3rem;
-  align-items: start;
-  margin-bottom: 5rem;
-}
-
-.act-mark {
-  border-left: 2px solid var(--eco-lime);
-  padding-left: 1.25rem;
-  display: flex;
-  flex-direction: column;
-}
-.act-mark__num {
-  font-size: clamp(4rem, 8vw, 7rem);
-  color: var(--eco-lime);
-  line-height: 0.8;
-}
-.act-mark__label {
-  font-size: 0.6875rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(244, 241, 232, 0.55);
-  margin-top: 0.4rem;
-}
-
-.tanques__heading { padding-top: 0.75rem; }
-.tanques__title {
-  font-size: clamp(2.25rem, 5.5vw, 4.75rem);
-  margin: 1rem 0 1.5rem;
-  color: var(--eco-bone);
-}
-.tanques__title em {
-  font-style: italic;
-  color: var(--eco-lime);
-  font-weight: 800;
-}
-.tanques__lede {
-  max-width: 56ch;
+  overflow: hidden;
 }
 
 .tanques__body {
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 5rem;
+  grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
   align-items: start;
   margin-bottom: 5rem;
 }
 
 .diagram {
   position: relative;
+  padding: 1.5rem;
+  background: var(--eco-white);
+  border: 1px solid var(--eco-line);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-soft);
 }
-.diagram__svg {
-  width: 100%;
-  max-width: 360px;
-  height: auto;
-}
+.diagram__svg { width: 100%; max-width: 360px; height: auto; display: block; margin: 0 auto; }
 .diagram__caption {
   font-size: 0.6875rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(244, 241, 232, 0.55);
+  color: var(--eco-muted);
   margin-top: 1rem;
-  border-top: 1px solid rgba(126, 211, 33, 0.2);
   padding-top: 0.75rem;
+  border-top: 1px dashed var(--eco-line);
+  text-align: center;
 }
 
 .benefits {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
 }
 .benefit {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 1rem;
   padding: 1.5rem;
-  background: var(--eco-deep);
-  border: 1px solid rgba(244, 241, 232, 0.08);
-  transition: border-color 0.3s, transform 0.3s;
-  position: relative;
-}
-.benefit::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 24px;
-  height: 24px;
-  border-top: 2px solid var(--eco-lime);
-  border-left: 2px solid var(--eco-lime);
+  background: var(--eco-white);
+  border: 1px solid var(--eco-line);
+  border-radius: var(--r-md);
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
 .benefit:hover {
-  border-color: rgba(126, 211, 33, 0.4);
   transform: translateY(-3px);
+  border-color: rgba(30, 122, 51, 0.4);
+  box-shadow: var(--shadow-soft);
 }
 .benefit__icon {
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   display: grid;
   place-items: center;
-  background: rgba(126, 211, 33, 0.1);
-  color: var(--eco-lime);
+  background: var(--eco-moss);
+  color: var(--eco-forest);
+  border-radius: 14px;
 }
 .benefit__icon .mi { font-size: 1.5rem; }
 .benefit__title {
   font-family: var(--font-display);
-  font-weight: 800;
-  text-transform: uppercase;
-  font-size: 1.05rem;
-  letter-spacing: 0.01em;
-  color: var(--eco-bone);
-  margin-bottom: 0.4rem;
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--eco-ink);
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.01em;
 }
 .benefit__body {
   font-size: 0.9375rem;
-  color: var(--eco-cream);
-  line-height: 1.5;
+  color: var(--eco-graphite);
+  line-height: 1.55;
 }
 
 /* Compare */
 .compare {
-  background: linear-gradient(135deg, var(--eco-deep), #0a1410);
-  border: 1px solid rgba(126, 211, 33, 0.18);
-  padding: clamp(2rem, 4vw, 3rem);
+  background: var(--eco-white);
+  border: 1px solid var(--eco-line);
+  border-radius: var(--r-lg);
+  padding: clamp(2rem, 4vw, 3.25rem);
+  box-shadow: var(--shadow-card);
   position: relative;
   overflow: hidden;
 }
-.compare::after {
+.compare::before {
   content: '';
   position: absolute;
-  top: -50%;
-  right: -10%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(126, 211, 33, 0.12), transparent 60%);
-  pointer-events: none;
+  top: 0; left: 0;
+  width: 6px;
+  height: 100%;
+  background: var(--eco-forest);
+  border-radius: var(--r-lg) 0 0 var(--r-lg);
 }
-.compare__head { margin-bottom: 2.5rem; max-width: 720px; position: relative; }
+.compare__head { margin-bottom: 2.25rem; max-width: 720px; }
 .compare__title {
-  font-size: clamp(1.75rem, 3.6vw, 2.75rem);
+  font-size: clamp(1.65rem, 3.4vw, 2.5rem);
   margin: 0.75rem 0 1rem;
-  color: var(--eco-bone);
 }
-.compare__title em {
-  font-style: italic;
-  color: var(--eco-lime);
-}
-.compare__intro p {
-  color: var(--eco-cream);
-  font-size: 1.0625rem;
+.compare__head p {
+  color: var(--eco-graphite);
+  font-size: 1rem;
   max-width: 60ch;
 }
 
-.compare__table {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  position: relative;
-}
+.compare__table { display: flex; flex-direction: column; }
 .compare__header,
 .compare__row {
   display: grid;
-  grid-template-columns: 140px 1fr 1fr;
+  grid-template-columns: 150px 1fr 1fr;
   gap: 1rem;
-  padding: 1rem 0;
+  padding: 1.1rem 0;
   align-items: center;
 }
-.compare__header {
-  border-bottom: 1px solid rgba(126, 211, 33, 0.3);
-}
+.compare__header { border-bottom: 1px solid var(--eco-ink); }
 .compare__row {
-  border-bottom: 1px dashed rgba(244, 241, 232, 0.1);
+  border-bottom: 1px dashed var(--eco-line);
 }
 .compare__row:last-child { border-bottom: none; }
+
 .compare__col,
 .compare__label {
   font-size: 0.6875rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(244, 241, 232, 0.55);
+  color: var(--eco-muted);
 }
-.compare__col--us { color: var(--eco-lime); }
-.compare__cell {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
+.compare__col--us { color: var(--eco-forest); }
+
+.compare__cell { display: flex; flex-direction: column; gap: 0.2rem; }
 .compare__value {
   font-size: clamp(1.5rem, 3vw, 2rem);
   line-height: 1;
+  font-weight: 600;
 }
-.compare__cell--us .compare__value { color: var(--eco-lime); }
-.compare__cell--them .compare__value { color: rgba(244, 241, 232, 0.5); }
-.compare__note {
-  font-size: 0.8125rem;
-  color: var(--eco-cream);
-}
-.compare__cell--them .compare__note { color: rgba(244, 241, 232, 0.4); }
+.compare__cell--us .compare__value { color: var(--eco-forest); }
+.compare__cell--them .compare__value { color: var(--eco-muted); }
+.compare__note { font-size: 0.875rem; color: var(--eco-graphite); }
+.compare__cell--them .compare__note { color: var(--eco-muted); }
 
 @media (max-width: 880px) {
-  .tanques__head { grid-template-columns: 1fr; gap: 1.5rem; }
-  .tanques__body { grid-template-columns: 1fr; gap: 3rem; }
+  .tanques__body { grid-template-columns: 1fr; }
   .benefits { grid-template-columns: 1fr; }
   .compare__header, .compare__row { grid-template-columns: 90px 1fr 1fr; gap: 0.5rem; }
 }

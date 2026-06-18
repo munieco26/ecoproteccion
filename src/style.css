@@ -1,55 +1,71 @@
 /* ============================================================
-   ECOPROTECCION — DESIGN SYSTEM
-   Industrial eco-protection storyboard
+   ECOPROTECCION — DESIGN SYSTEM (v2 · light / eco-editorial)
    ============================================================ */
 
-@import '@fontsource/big-shoulders-display/400.css';
-@import '@fontsource/big-shoulders-display/700.css';
-@import '@fontsource/big-shoulders-display/800.css';
-@import '@fontsource/big-shoulders-display/900.css';
-@import '@fontsource/familjen-grotesk/400.css';
-@import '@fontsource/familjen-grotesk/500.css';
-@import '@fontsource/familjen-grotesk/600.css';
-@import '@fontsource/familjen-grotesk/700.css';
-@import '@fontsource/jetbrains-mono/400.css';
-@import '@fontsource/jetbrains-mono/500.css';
-@import '@fontsource/jetbrains-mono/700.css';
+@import '@fontsource/fraunces/400.css';
+@import '@fontsource/fraunces/500.css';
+@import '@fontsource/fraunces/600.css';
+@import '@fontsource/fraunces/700.css';
+@import '@fontsource/fraunces/400-italic.css';
+@import '@fontsource/fraunces/600-italic.css';
+@import '@fontsource/fraunces/700-italic.css';
+@import '@fontsource/plus-jakarta-sans/400.css';
+@import '@fontsource/plus-jakarta-sans/500.css';
+@import '@fontsource/plus-jakarta-sans/600.css';
+@import '@fontsource/plus-jakarta-sans/700.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+@import '@fontsource/ibm-plex-mono/600.css';
 @import 'material-icons/iconfont/filled.css';
 @import 'material-icons/iconfont/outlined.css';
 
 :root {
-  /* Brand */
-  --eco-lime: #7ED321;
-  --eco-lime-glow: #b4ff4a;
-  --eco-green: #2A8A2A;
-  --eco-deep: #0E1A12;
-  --eco-ink: #050805;
-  --eco-bone: #F4F1E8;
-  --eco-cream: #E8E2CF;
-  --eco-rust: #C2492A;
-  --eco-amber: #E8B23A;
+  /* Surfaces */
+  --eco-white: #FFFFFF;
+  --eco-bone:  #F7F4EC;
+  --eco-fog:   #EFEFEA;
+  --eco-mist:  #D9DCD3;
+  --eco-line:  #E4E6DF;
+
+  /* Brand greens (forest, NOT neon) */
+  --eco-forest:      #1E7A33;
+  --eco-forest-deep: #14512A;
+  --eco-leaf:        #2F9A42;
+  --eco-moss:        rgba(30, 122, 51, 0.10);
+
+  /* Ink / typography */
+  --eco-ink:      #0B1410;
+  --eco-graphite: #3A413A;
+  --eco-muted:    #5E6660;
+
+  /* Accent (sparingly, for stats / micro-marks) */
+  --eco-amber: #B98223;
 
   /* Type */
-  --font-display: 'Big Shoulders Display', 'Impact', sans-serif;
-  --font-body: 'Familjen Grotesk', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+  --font-display: 'Fraunces', 'Times New Roman', serif;
+  --font-body:    'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono:    'IBM Plex Mono', 'Consolas', monospace;
 
   /* Layout */
   --gutter: clamp(1.25rem, 4vw, 3rem);
-  --max: 1440px;
+  --max:    1320px;
 
-  color-scheme: dark;
+  /* Radii / shadow */
+  --r-sm: 8px;
+  --r-md: 18px;
+  --r-lg: 28px;
+  --r-xl: 44px;
+  --shadow-soft: 0 1px 2px rgba(11, 20, 16, 0.04), 0 20px 50px -28px rgba(11, 20, 16, 0.18);
+  --shadow-card: 0 1px 2px rgba(11, 20, 16, 0.05), 0 22px 60px -32px rgba(11, 20, 16, 0.25);
+
+  color-scheme: light;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
-  background: var(--eco-ink);
-  color: var(--eco-bone);
+  background: var(--eco-bone);
+  color: var(--eco-ink);
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.5;
@@ -58,28 +74,13 @@ html, body {
   text-rendering: optimizeLegibility;
 }
 
-#app {
-  min-height: 100vh;
-  position: relative;
-}
+#app { min-height: 100vh; position: relative; }
 
-/* Film-grain overlay over the whole storyboard */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1000;
-  opacity: 0.07;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
+a       { color: inherit; text-decoration: none; }
+button  { font-family: inherit; border: none; background: none; color: inherit; cursor: pointer; }
+img     { display: block; max-width: 100%; }
 
-a { color: inherit; text-decoration: none; }
-button { font-family: inherit; border: none; background: none; color: inherit; cursor: pointer; }
-img { display: block; max-width: 100%; }
-
-::selection { background: var(--eco-lime); color: var(--eco-ink); }
+::selection { background: var(--eco-forest); color: var(--eco-white); }
 
 /* ============================================================
    UTILITIES
@@ -90,48 +91,51 @@ img { display: block; max-width: 100%; }
   padding-inline: var(--gutter);
 }
 
+/* Editorial eyebrow — small dot + uppercase mono */
 .eyebrow {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   font-weight: 500;
-  color: var(--eco-lime);
+  color: var(--eco-forest);
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.625rem;
 }
 .eyebrow::before {
   content: '';
-  width: 28px;
-  height: 1px;
-  background: var(--eco-lime);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--eco-forest);
+  flex-shrink: 0;
 }
 
+/* Display headings — Fraunces, variable-weight, soft optical settings */
 .display {
   font-family: var(--font-display);
-  font-weight: 900;
-  line-height: 0.85;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 0.96;
+  letter-spacing: -0.025em;
+  font-variation-settings: 'SOFT' 50, 'opsz' 144;
+  color: var(--eco-ink);
+}
+.display em {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--eco-forest);
+  font-variation-settings: 'SOFT' 80, 'opsz' 144;
 }
 
 .body-lg {
-  font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
-  line-height: 1.55;
-  color: var(--eco-cream);
+  font-size: clamp(1.0625rem, 1.2vw, 1.1875rem);
+  line-height: 1.6;
+  color: var(--eco-graphite);
 }
 
-/* Hazard tape — diagonal warning stripes */
-.hazard-tape {
-  height: 14px;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    var(--eco-lime) 0,
-    var(--eco-lime) 18px,
-    var(--eco-ink) 18px,
-    var(--eco-ink) 36px
-  );
+.mono {
+  font-family: var(--font-mono);
 }
 
 section { position: relative; }
@@ -149,9 +153,7 @@ section { position: relative; }
   -webkit-font-feature-settings: 'liga';
   font-feature-settings: 'liga';
 }
-.mi-out {
-  font-family: 'Material Icons Outlined';
-}
+.mi-out { font-family: 'Material Icons Outlined'; }
 
 html { scroll-behavior: smooth; }
 
@@ -161,4 +163,91 @@ html { scroll-behavior: smooth; }
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ============================================================
+   BUTTONS (shared)
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.95rem 1.5rem;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: transform 0.25s ease, background 0.25s ease,
+              color 0.25s ease, border-color 0.25s ease,
+              box-shadow 0.25s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn .mi { font-size: 1.125rem; }
+.btn:disabled { opacity: 0.6; cursor: progress; }
+
+.btn--primary {
+  background: var(--eco-forest);
+  color: var(--eco-white);
+  border-color: var(--eco-forest);
+  box-shadow: var(--shadow-soft);
+}
+.btn--primary:hover {
+  background: var(--eco-forest-deep);
+  border-color: var(--eco-forest-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -10px rgba(20, 81, 42, 0.45);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--eco-ink);
+  border-color: var(--eco-ink);
+}
+.btn--ghost:hover {
+  background: var(--eco-ink);
+  color: var(--eco-bone);
+}
+
+.btn--dark {
+  background: var(--eco-ink);
+  color: var(--eco-bone);
+  border-color: var(--eco-ink);
+}
+.btn--dark:hover { background: #1a2421; }
+
+/* ============================================================
+   SECTION HEAD — shared anatomy for storytelling sections
+   ============================================================ */
+.section-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 4rem;
+  max-width: 60ch;
+}
+.section-head__title {
+  font-size: clamp(2.25rem, 5.5vw, 4.5rem);
+  max-width: 18ch;
+}
+.section-head__lede {
+  margin-top: 0.5rem;
+  max-width: 58ch;
+}
+
+/* ============================================================
+   GREEN BAND — rounded forest band used for section transitions
+   ============================================================ */
+.eco-band {
+  background: var(--eco-forest);
+  color: var(--eco-bone);
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  position: relative;
+  overflow: hidden;
+}
+.eco-band--floor {
+  border-radius: 0 0 var(--r-xl) var(--r-xl);
 }

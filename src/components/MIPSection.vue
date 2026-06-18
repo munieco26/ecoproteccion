@@ -1,5 +1,46 @@
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
 import { Motion } from 'motion-v'
+import HexMotif from './HexMotif.vue'
+
+const reduction = ref(0)
+let observer = null
+let rafId = null
+
+function animateTo(target, duration = 1600) {
+  const start = performance.now()
+  const from = reduction.value
+  const tick = (now) => {
+    const t = Math.min(1, (now - start) / duration)
+    const eased = 1 - Math.pow(1 - t, 3)
+    reduction.value = Math.round(from + (target - from) * eased)
+    if (t < 1) rafId = requestAnimationFrame(tick)
+  }
+  cancelAnimationFrame(rafId)
+  rafId = requestAnimationFrame(tick)
+}
+
+onMounted(() => {
+  const el = document.querySelector('#mip .outcome')
+  if (!el || typeof IntersectionObserver === 'undefined') {
+    reduction.value = 85
+    return
+  }
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        animateTo(85)
+        observer.disconnect()
+      }
+    })
+  }, { threshold: 0.35 })
+  observer.observe(el)
+})
+
+onUnmounted(() => {
+  observer?.disconnect()
+  cancelAnimationFrame(rafId)
+})
 
 const phases = [
   {
@@ -29,44 +70,34 @@ const phases = [
 ]
 
 const strategies = [
-  { k: 'Cultural', d: 'Hábitos, limpieza, manejo de residuos.' },
-  { k: 'Biológica', d: 'Enemigos naturales y barreras vivas.' },
+  { k: 'Cultural',    d: 'Hábitos, limpieza y manejo de residuos.' },
+  { k: 'Biológica',   d: 'Enemigos naturales y barreras vivas.' },
   { k: 'Estructural', d: 'Aislamiento, sellado y mejoras edilicias.' },
 ]
 </script>
 
 <template>
   <section id="mip" class="mip">
-    <div class="container mip__head">
-      <Motion
-        as="div"
-        class="act-mark"
-        :initial="{ opacity: 0, x: -40 }"
-        :while-in-view="{ opacity: 1, x: 0 }"
-        :in-view-options="{ once: true, margin: '0px 0px -100px 0px' }"
-        :transition="{ duration: 0.7 }"
-      >
-        <span class="act-mark__num display">03</span>
-        <span class="act-mark__label mono">ACTO TERCERO</span>
-      </Motion>
+    <HexMotif position="tl" variant="thin" :size="220" :opacity="0.45" />
 
-      <div class="mip__heading">
+    <div class="container">
+      <div class="section-head">
         <Motion
           as="span"
           class="eyebrow"
-          :initial="{ opacity: 0 }"
-          :while-in-view="{ opacity: 1 }"
+          :initial="{ y: 6 }"
+          :while-in-view="{ y: 0 }"
           :in-view-options="{ once: true }"
-          :transition="{ duration: 0.6, delay: 0.1 }"
+          :transition="{ duration: 0.6 }"
         >MIP — Manejo Integrado de Plagas</Motion>
 
         <Motion
           as="h2"
-          class="mip__title display"
-          :initial="{ opacity: 0, y: 30 }"
-          :while-in-view="{ opacity: 1, y: 0 }"
+          class="section-head__title display"
+          :initial="{ y: 24 }"
+          :while-in-view="{ y: 0 }"
           :in-view-options="{ once: true, margin: '0px 0px -120px 0px' }"
-          :transition="{ duration: 0.8, delay: 0.15 }"
+          :transition="{ duration: 0.8, delay: 0.1 }"
         >
           Menos veneno.<br/>
           <em>Más estrategia.</em>
@@ -74,16 +105,16 @@ const strategies = [
 
         <Motion
           as="p"
-          class="body-lg mip__lede"
-          :initial="{ opacity: 0, y: 20 }"
-          :while-in-view="{ opacity: 1, y: 0 }"
+          class="body-lg section-head__lede"
+          :initial="{ y: 16 }"
+          :while-in-view="{ y: 0 }"
           :in-view-options="{ once: true, margin: '0px 0px -100px 0px' }"
-          :transition="{ duration: 0.7, delay: 0.3 }"
+          :transition="{ duration: 0.7, delay: 0.2 }"
         >
-          Un método que combina prácticas culturales, biológicas y estructurales para
-          controlar cualquier infestación. Usamos información actualizada sobre los
-          ciclos de vida de las plagas y su interacción con el ambiente para reducir
-          drásticamente el uso de pesticidas.
+          Un método que combina prácticas culturales, biológicas y estructurales
+          para controlar cualquier infestación. Usamos información actualizada sobre
+          los ciclos de vida de las plagas y su interacción con el ambiente para
+          reducir drásticamente el uso de pesticidas.
         </Motion>
       </div>
     </div>
@@ -92,17 +123,15 @@ const strategies = [
     <div class="container">
       <Motion
         class="strategies"
-        :initial="{ opacity: 0, y: 30 }"
-        :while-in-view="{ opacity: 1, y: 0 }"
+        :initial="{ y: 24 }"
+        :while-in-view="{ y: 0 }"
         :in-view-options="{ once: true, margin: '0px 0px -100px 0px' }"
         :transition="{ duration: 0.7 }"
       >
-        <div class="strategies__label mono">PILARES →</div>
-        <div
-          v-for="s in strategies"
-          :key="s.k"
-          class="strategy"
-        >
+        <div class="strategies__label mono">
+          <span class="strategies__dot"></span>Pilares
+        </div>
+        <div v-for="s in strategies" :key="s.k" class="strategy">
           <span class="strategy__k display">{{ s.k }}</span>
           <span class="strategy__d">{{ s.d }}</span>
         </div>
@@ -112,59 +141,68 @@ const strategies = [
     <!-- Process flow -->
     <div class="container mip__flow">
       <svg class="flow-line" viewBox="0 0 1200 4" preserveAspectRatio="none" aria-hidden="true">
-        <line x1="0" y1="2" x2="1200" y2="2" stroke="#7ED321" stroke-width="1" stroke-dasharray="6 6"/>
+        <line x1="0" y1="2" x2="1200" y2="2" stroke="#1E7A33" stroke-width="1" stroke-dasharray="6 6" opacity="0.4"/>
       </svg>
 
       <Motion
         v-for="(p, i) in phases"
         :key="p.n"
         class="phase"
-        :initial="{ opacity: 0, y: 40 }"
-        :while-in-view="{ opacity: 1, y: 0 }"
+        :class="{ 'phase--monitoring': p.icon === 'monitoring' }"
+        :initial="{ y: 30 }"
+        :while-in-view="{ y: 0 }"
         :in-view-options="{ once: true, margin: '0px 0px -80px 0px' }"
-        :transition="{ duration: 0.7, delay: i * 0.12 }"
+        :transition="{ duration: 0.7, delay: i * 0.1 }"
       >
         <div class="phase__node">
-          <span class="mono phase__n">{{ p.n }}</span>
           <div class="phase__hex">
-            <span class="mi mi-out">{{ p.icon }}</span>
+            <svg viewBox="0 0 80 88" width="80" height="88" aria-hidden="true">
+              <path
+                d="M40 4 L72 22 L72 66 L40 84 L8 66 L8 22 Z"
+                fill="#FFFFFF"
+                stroke="#1E7A33"
+                stroke-width="1.5"
+              />
+            </svg>
+            <span class="mi mi-out phase__hex-icon">{{ p.icon }}</span>
           </div>
+          <span class="phase__n mono">{{ p.n }}</span>
         </div>
         <h3 class="phase__title display">{{ p.title }}</h3>
         <p class="phase__body">{{ p.body }}</p>
       </Motion>
     </div>
 
-    <!-- Outcome box -->
+    <!-- Outcome band — the rounded green floor from the reference -->
     <div class="container">
       <Motion
-        class="outcome"
-        :initial="{ opacity: 0, y: 40 }"
-        :while-in-view="{ opacity: 1, y: 0 }"
+        class="outcome eco-band eco-band--floor"
+        :initial="{ y: 32 }"
+        :while-in-view="{ y: 0 }"
         :in-view-options="{ once: true, margin: '0px 0px -100px 0px' }"
         :transition="{ duration: 0.8 }"
       >
-        <div class="outcome__num display">↓</div>
         <div class="outcome__copy">
-          <span class="mono outcome__tag">RESULTADO</span>
+          <span class="eyebrow eyebrow--light">Resultado</span>
           <h3 class="outcome__title display">
-            Reducción drástica<br/>
-            del uso de pesticidas.
+            Reducción drástica<br/>del uso de pesticidas.
           </h3>
           <p>
-            Minimizamos la toxicidad y el impacto negativo sobre la salud de las personas
-            y el ambiente. La intervención química se vuelve la última instancia, no la
-            primera.
+            Minimizamos la toxicidad y el impacto negativo sobre la salud de las
+            personas y el ambiente. La intervención química se vuelve la última
+            instancia, no la primera.
           </p>
         </div>
         <div class="outcome__metrics">
           <div class="metric">
-            <span class="metric__v display">−85%</span>
-            <span class="metric__l mono">químicos vs. método tradicional</span>
+            <span class="metric__v display">
+              <span class="metric__sign">−</span><span>{{ reduction }}</span><span class="metric__unit">%</span>
+            </span>
+            <span class="metric__l">químicos vs. método tradicional</span>
           </div>
           <div class="metric">
             <span class="metric__v display">0</span>
-            <span class="metric__l mono">intoxicaciones reportadas</span>
+            <span class="metric__l">intoxicaciones reportadas</span>
           </div>
         </div>
       </Motion>
@@ -174,79 +212,61 @@ const strategies = [
 
 <style scoped>
 .mip {
-  padding: 7rem 0 6rem;
-  background:
-    radial-gradient(ellipse 800px 400px at 80% 20%, rgba(126, 211, 33, 0.06), transparent 60%),
-    var(--eco-ink);
+  padding: clamp(5rem, 9vw, 7.5rem) 0 6rem;
+  background: var(--eco-bone);
   position: relative;
-}
-.mip::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(126, 211, 33, 0.4), transparent);
+  overflow: hidden;
 }
 
-.mip__head {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 3rem;
-  align-items: start;
-  margin-bottom: 4rem;
-}
-.act-mark { border-left: 2px solid var(--eco-lime); padding-left: 1.25rem; }
-.act-mark__num { font-size: clamp(4rem, 8vw, 7rem); color: var(--eco-lime); line-height: 0.8; display: block; }
-.act-mark__label { display: block; font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(244, 241, 232, 0.55); margin-top: 0.4rem; }
-
-.mip__heading { padding-top: 0.75rem; }
-.mip__title {
-  font-size: clamp(2.25rem, 5.5vw, 4.75rem);
-  margin: 1rem 0 1.5rem;
-  color: var(--eco-bone);
-}
-.mip__title em { font-style: italic; color: var(--eco-lime); font-weight: 800; }
-.mip__lede { max-width: 56ch; }
+.eyebrow--light { color: var(--eco-bone); }
+.eyebrow--light::before { background: var(--eco-bone); }
 
 /* Strategies */
 .strategies {
   display: grid;
   grid-template-columns: auto repeat(3, 1fr);
-  gap: 1rem;
-  align-items: stretch;
-  padding: 1.25rem;
-  background: var(--eco-deep);
-  border: 1px solid rgba(126, 211, 33, 0.18);
-  margin-bottom: 5rem;
+  gap: 0;
+  background: var(--eco-white);
+  border: 1px solid var(--eco-line);
+  border-radius: var(--r-md);
+  margin-bottom: 4.5rem;
+  overflow: hidden;
 }
 .strategies__label {
   display: flex;
   align-items: center;
-  padding-right: 1rem;
-  border-right: 1px dashed rgba(244, 241, 232, 0.15);
+  gap: 0.5rem;
+  padding: 1.25rem 1.4rem;
   font-size: 0.6875rem;
-  letter-spacing: 0.16em;
-  color: var(--eco-lime);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--eco-forest);
+  background: var(--eco-moss);
+  border-right: 1px solid var(--eco-line);
+}
+.strategies__dot {
+  width: 7px;
+  height: 7px;
+  background: var(--eco-forest);
+  border-radius: 50%;
 }
 .strategy {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  padding: 0.5rem 1rem;
-  border-right: 1px dashed rgba(244, 241, 232, 0.08);
+  gap: 0.3rem;
+  padding: 1.25rem 1.4rem;
+  border-right: 1px solid var(--eco-line);
 }
 .strategy:last-child { border-right: none; }
 .strategy__k {
-  font-size: 1.5rem;
-  color: var(--eco-bone);
-  letter-spacing: -0.01em;
+  font-size: 1.35rem;
+  color: var(--eco-ink);
+  font-weight: 600;
 }
 .strategy__d {
   font-size: 0.875rem;
-  color: var(--eco-cream);
+  color: var(--eco-graphite);
+  line-height: 1.5;
 }
 
 /* Flow */
@@ -255,146 +275,119 @@ const strategies = [
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
-  padding: 3rem 0 4rem;
+  padding: 2rem 0 4rem;
   margin-bottom: 4rem;
 }
 .flow-line {
   position: absolute;
-  left: 4%;
-  right: 4%;
-  top: 76px;
-  width: 92%;
+  left: 6%;
+  right: 6%;
+  top: 88px;
+  width: 88%;
   height: 4px;
   z-index: 0;
 }
 
-.phase {
-  position: relative;
-  z-index: 1;
-  text-align: left;
-}
+.phase { position: relative; z-index: 1; text-align: left; }
 .phase__node {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.85rem;
   margin-bottom: 1.5rem;
 }
-.phase__n {
-  font-size: 0.875rem;
-  color: var(--eco-lime);
-  font-weight: 700;
-  letter-spacing: 0.04em;
-}
 .phase__hex {
-  width: 72px;
-  height: 80px;
+  position: relative;
+  width: 80px;
+  height: 88px;
   display: grid;
   place-items: center;
-  background: var(--eco-deep);
-  color: var(--eco-lime);
-  border: 1.5px solid var(--eco-lime);
-  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  transition: transform 0.3s;
+}
+.phase__hex svg { position: absolute; inset: 0; }
+.phase__hex-icon {
   position: relative;
-  transition: all 0.4s;
+  z-index: 1;
+  font-size: 1.875rem;
+  color: var(--eco-forest);
+  transition: color 0.3s;
 }
-.phase:hover .phase__hex {
-  background: var(--eco-lime);
-  color: var(--eco-ink);
-  transform: scale(1.05);
+/* Material Icons "monitoring" sits off-center in its em-box — nudge it inward */
+.phase--monitoring .phase__hex-icon {
+  transform: translate(4px, 4px);
 }
-.phase__hex .mi { font-size: 1.875rem; }
+.phase:hover .phase__hex { transform: translateY(-3px); }
+.phase__n {
+  font-size: 0.8125rem;
+  color: var(--eco-muted);
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
 .phase__title {
-  font-size: 1.5rem;
-  color: var(--eco-bone);
-  margin-bottom: 0.5rem;
+  font-size: 1.35rem;
+  color: var(--eco-ink);
+  margin-bottom: 0.4rem;
+  font-weight: 600;
 }
 .phase__body {
   font-size: 0.9375rem;
-  color: var(--eco-cream);
-  line-height: 1.55;
-  max-width: 28ch;
+  color: var(--eco-graphite);
+  line-height: 1.6;
+  max-width: 30ch;
 }
 
-/* Outcome */
+/* Outcome band */
 .outcome {
   display: grid;
-  grid-template-columns: 80px 1.5fr 1fr;
-  gap: 2.5rem;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 3rem;
   align-items: center;
-  background: linear-gradient(135deg, var(--eco-lime), #9bef3a);
-  color: var(--eco-ink);
-  padding: clamp(2rem, 4vw, 3rem);
-  position: relative;
-  overflow: hidden;
-}
-.outcome::before {
-  content: 'MIP / OUT';
-  position: absolute;
-  top: 50%;
-  right: -2rem;
-  transform: translateY(-50%) rotate(90deg);
-  font-family: var(--font-mono);
-  font-size: 9rem;
-  font-weight: 700;
-  color: rgba(5, 8, 5, 0.07);
-  letter-spacing: -0.05em;
-  pointer-events: none;
-}
-.outcome__num {
-  font-size: clamp(3rem, 8vw, 6rem);
-  color: var(--eco-ink);
-  line-height: 0.8;
-}
-.outcome__tag {
-  font-size: 0.6875rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(5, 8, 5, 0.7);
+  padding: clamp(2.25rem, 5vw, 3.5rem);
+  border-radius: var(--r-lg);
 }
 .outcome__title {
-  font-size: clamp(1.75rem, 3.4vw, 2.75rem);
-  color: var(--eco-ink);
-  margin: 0.5rem 0 1rem;
+  font-size: clamp(1.85rem, 3.6vw, 2.75rem);
+  color: var(--eco-bone);
+  margin: 0.75rem 0 1rem;
 }
+.outcome__title em { color: var(--eco-bone); font-style: italic; }
 .outcome__copy p {
-  color: rgba(5, 8, 5, 0.85);
+  color: rgba(247, 244, 236, 0.86);
   max-width: 56ch;
   font-size: 1rem;
 }
 .outcome__metrics {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  position: relative;
-  z-index: 1;
+  gap: 1.25rem;
 }
 .metric {
-  border-top: 2px solid var(--eco-ink);
-  padding-top: 0.6rem;
+  border-top: 1px solid rgba(247, 244, 236, 0.35);
+  padding-top: 0.75rem;
 }
 .metric__v {
-  font-size: clamp(2rem, 4.5vw, 3.5rem);
-  color: var(--eco-ink);
-  line-height: 0.9;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  color: var(--eco-bone);
+  line-height: 0.95;
+  font-weight: 600;
 }
 .metric__l {
-  font-size: 0.625rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(5, 8, 5, 0.7);
-  margin-top: 0.3rem;
   display: block;
-  max-width: 18ch;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: rgba(247, 244, 236, 0.78);
+  margin-top: 0.45rem;
+  max-width: 22ch;
 }
 
 @media (max-width: 980px) {
-  .mip__head { grid-template-columns: 1fr; gap: 1.5rem; }
   .strategies { grid-template-columns: 1fr; }
-  .strategies__label { border-right: none; border-bottom: 1px dashed rgba(244, 241, 232, 0.15); padding: 0 0 0.75rem 0; }
-  .strategy { border-right: none; border-bottom: 1px dashed rgba(244, 241, 232, 0.08); }
+  .strategies__label { border-right: none; border-bottom: 1px solid var(--eco-line); }
+  .strategy { border-right: none; border-bottom: 1px solid var(--eco-line); }
+  .strategy:last-child { border-bottom: none; }
   .mip__flow { grid-template-columns: 1fr 1fr; }
   .flow-line { display: none; }
-  .outcome { grid-template-columns: 1fr; gap: 1.5rem; }
+  .outcome { grid-template-columns: 1fr; gap: 2rem; }
 }
 @media (max-width: 560px) {
   .mip__flow { grid-template-columns: 1fr; }

@@ -4,13 +4,14 @@ const year = new Date().getFullYear()
 
 <template>
   <footer class="ft">
-    <div class="hazard-tape"></div>
-
-    <div class="container ft__big">
+    <!--div class="container ft__big">
       <h2 class="ft__bigtext display">
-        ECO<em>PROTECCIÓN</em>
+        Eco<em>protección</em>
       </h2>
-    </div>
+      <p class="ft__tag">
+        Protección integral, del tanque al jardín.
+      </p>
+    </div-->
 
     <div class="container ft__grid">
       <div class="ft__col">
@@ -22,13 +23,13 @@ const year = new Date().getFullYear()
       </div>
 
       <div class="ft__col">
-        <span class="ft__h mono">Capítulos</span>
+        <span class="ft__h mono">Secciones</span>
         <ul>
-          <li><a href="#tanques">01 · Limpieza de Tanques</a></li>
-          <li><a href="#desinfeccion">02 · Desinfección</a></li>
-          <li><a href="#mip">03 · MIP</a></li>
-          <li><a href="#nosotros">04 · Nosotros</a></li>
-          <li><a href="#contacto">05 · Contacto</a></li>
+          <li><a href="#tanques">Limpieza de tanques</a></li>
+          <li><a href="#desinfeccion">Desinfección</a></li>
+          <li><a href="#mip">MIP</a></li>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#contacto">Contacto</a></li>
         </ul>
       </div>
 
@@ -54,66 +55,70 @@ const year = new Date().getFullYear()
     </div>
 
     <div class="container ft__bottom mono">
-      <span>© {{ year }} Ecoprotección · Buenos Aires, AR</span>
-      <span>Una historia contada en cinco actos.</span>
+      <span>© {{ year }} All rights reserved · <a href="https://mmlab.ar" target="_blank" rel="noopener">MYMLAB</a></span>
     </div>
   </footer>
 </template>
 
 <style scoped>
 .ft {
-  background: var(--eco-deep);
-  border-top: 1px solid rgba(126, 211, 33, 0.18);
+  background: var(--eco-bone);
+  color: var(--eco-ink);
+  border-top: 1px solid var(--eco-line);
   padding-bottom: 2rem;
 }
 .ft__big {
-  padding: 4rem 0 2.5rem;
-  overflow: hidden;
+  padding: 5rem 0 2.5rem;
   text-align: center;
 }
 .ft__bigtext {
-  font-size: clamp(3.5rem, 14vw, 12rem);
-  color: var(--eco-bone);
-  letter-spacing: -0.03em;
-  line-height: 0.85;
+  font-size: clamp(3.5rem, 14vw, 11rem);
+  color: var(--eco-ink);
+  letter-spacing: -0.035em;
+  line-height: 0.9;
+  font-weight: 600;
 }
 .ft__bigtext em {
   font-style: italic;
-  color: var(--eco-lime);
-  font-weight: 800;
+  color: var(--eco-forest);
+  font-weight: 500;
+}
+.ft__tag {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  color: var(--eco-muted);
+  margin-top: 0.5rem;
 }
 
 .ft__grid {
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr 1fr;
   gap: 2rem;
-  padding-top: 2.5rem;
-  border-top: 1px solid rgba(244, 241, 232, 0.08);
+  padding-top: 3rem;
+  border-top: 1px solid var(--eco-line);
   margin-bottom: 2.5rem;
 }
 
-.ft__col { display: flex; flex-direction: column; gap: 0.75rem; }
-.ft__logo { height: 40px; width: auto; margin-bottom: 0.5rem; }
+.ft__col { display: flex; flex-direction: column; gap: 0.65rem; }
+.ft__logo { height: auto; width: 100%; margin-bottom: 0.4rem; }
 .ft__txt {
   font-size: 0.875rem;
-  color: var(--eco-cream);
+  color: var(--eco-graphite);
   line-height: 1.55;
   max-width: 38ch;
 }
 .ft__h {
   font-size: 0.6875rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--eco-lime);
-  margin-bottom: 0.5rem;
+  color: var(--eco-forest);
+  margin-bottom: 0.6rem;
 }
 .ft__col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-.ft__col li {
-  font-size: 0.875rem;
-  color: var(--eco-cream);
-}
+.ft__col li { font-size: 0.875rem; color: var(--eco-graphite); }
 .ft__col li a { transition: color 0.25s; }
-.ft__col li a:hover { color: var(--eco-lime); }
+.ft__col li a:hover { color: var(--eco-forest); }
 
 .ft__bottom {
   display: flex;
@@ -121,10 +126,10 @@ const year = new Date().getFullYear()
   gap: 1rem;
   flex-wrap: wrap;
   padding-top: 1.5rem;
-  border-top: 1px dashed rgba(244, 241, 232, 0.1);
+  border-top: 1px dashed var(--eco-line);
   font-size: 0.6875rem;
-  letter-spacing: 0.14em;
-  color: rgba(244, 241, 232, 0.45);
+  letter-spacing: 0.16em;
+  color: var(--eco-muted);
   text-transform: uppercase;
 }
 

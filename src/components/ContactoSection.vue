@@ -1,6 +1,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { Motion } from 'motion-v'
+import HexMotif from './HexMotif.vue'
 
 const form = reactive({
   nombre: '',
@@ -12,7 +13,7 @@ const form = reactive({
   honey: '',
 })
 
-const status = ref('idle') // idle | loading | success | error
+const status = ref('idle')
 const errorMsg = ref('')
 
 const services = [
@@ -51,45 +52,35 @@ async function submit() {
 }
 
 const channels = [
-  { icon: 'forum', label: 'WhatsApp', value: '+54 9 11 6502-9146', href: 'https://wa.me/5491165029146' },
-  { icon: 'mail_outline', label: 'Email', value: 'info@ecoproteccion.com.ar', href: 'mailto:info@ecoproteccion.com.ar' },
-  { icon: 'photo_camera', label: 'Instagram', value: '@ecoproteccion', href: 'https://www.instagram.com/ecoproteccion/' },
-  { icon: 'thumb_up', label: 'Facebook', value: '/ecoproteccion', href: 'https://www.facebook.com/ecoproteccion' },
+  { icon: 'forum',         label: 'WhatsApp',   value: '+54 9 11 6502-9146',           href: 'https://wa.me/5491165029146' },
+  { icon: 'mail_outline',  label: 'Email',      value: 'info@ecoproteccion.com.ar',    href: 'mailto:info@ecoproteccion.com.ar' },
+  { icon: 'photo_camera',  label: 'Instagram',  value: '@ecoproteccion',               href: 'https://www.instagram.com/ecoproteccion/' },
+  { icon: 'thumb_up',      label: 'Facebook',   value: '/ecoproteccion',               href: 'https://www.facebook.com/ecoproteccion' },
 ]
 </script>
 
 <template>
   <section id="contacto" class="ctc">
-    <div class="container ctc__head">
-      <Motion
-        as="div"
-        class="act-mark"
-        :initial="{ opacity: 0, x: -40 }"
-        :while-in-view="{ opacity: 1, x: 0 }"
-        :in-view-options="{ once: true, margin: '0px 0px -100px 0px' }"
-        :transition="{ duration: 0.7 }"
-      >
-        <span class="act-mark__num display">05</span>
-        <span class="act-mark__label mono">CIERRE</span>
-      </Motion>
+    <HexMotif position="bl" variant="solid" :size="220" :opacity="0.95" />
 
-      <div class="ctc__heading">
+    <div class="container">
+      <div class="section-head">
         <Motion
           as="span"
           class="eyebrow"
-          :initial="{ opacity: 0 }"
-          :while-in-view="{ opacity: 1 }"
+          :initial="{ y: 6 }"
+          :while-in-view="{ y: 0 }"
           :in-view-options="{ once: true }"
-          :transition="{ duration: 0.6, delay: 0.1 }"
+          :transition="{ duration: 0.6 }"
         >Hablemos</Motion>
 
         <Motion
           as="h2"
-          class="ctc__title display"
-          :initial="{ opacity: 0, y: 30 }"
-          :while-in-view="{ opacity: 1, y: 0 }"
+          class="section-head__title display"
+          :initial="{ y: 24 }"
+          :while-in-view="{ y: 0 }"
           :in-view-options="{ once: true, margin: '0px 0px -120px 0px' }"
-          :transition="{ duration: 0.8, delay: 0.15 }"
+          :transition="{ duration: 0.8, delay: 0.1 }"
         >
           Contános qué pasa.<br/>
           <em>Te respondemos hoy.</em>
@@ -97,14 +88,14 @@ const channels = [
 
         <Motion
           as="p"
-          class="body-lg ctc__lede"
-          :initial="{ opacity: 0, y: 20 }"
-          :while-in-view="{ opacity: 1, y: 0 }"
+          class="body-lg section-head__lede"
+          :initial="{ y: 16 }"
+          :while-in-view="{ y: 0 }"
           :in-view-options="{ once: true, margin: '0px 0px -100px 0px' }"
-          :transition="{ duration: 0.7, delay: 0.3 }"
+          :transition="{ duration: 0.7, delay: 0.2 }"
         >
-          Pedinos un diagnóstico sin compromiso. Visitamos, evaluamos y proponemos el plan
-          más eficaz al menor impacto. AMBA y zonas aledañas.
+          Pedinos un diagnóstico sin compromiso. Visitamos, evaluamos y
+          proponemos el plan más eficaz al menor impacto. AMBA y zonas aledañas.
         </Motion>
       </div>
     </div>
@@ -113,36 +104,36 @@ const channels = [
       <!-- Form -->
       <Motion
         class="form-card"
-        :initial="{ opacity: 0, y: 40 }"
-        :while-in-view="{ opacity: 1, y: 0 }"
+        :initial="{ y: 32 }"
+        :while-in-view="{ y: 0 }"
         :in-view-options="{ once: true, margin: '0px 0px -100px 0px' }"
         :transition="{ duration: 0.8 }"
       >
         <div class="form-card__head">
-          <span class="mono">FORM · 001</span>
-          <span class="mono">SOLICITUD DE PRESUPUESTO</span>
+          <span class="mono">Form · 001</span>
+          <span class="mono">Solicitud de presupuesto</span>
         </div>
 
         <form @submit.prevent="submit" novalidate>
           <div class="field-row">
             <label class="field">
-              <span class="field__label mono">→ Nombre *</span>
-              <input v-model="form.nombre" type="text" placeholder="Ej. Marcelo Gallardo" required>
+              <span class="field__label">Nombre *</span>
+              <input v-model="form.nombre" type="text" placeholder="Ej. María García" required>
             </label>
             <label class="field">
-              <span class="field__label mono">→ Teléfono *</span>
+              <span class="field__label">Teléfono *</span>
               <input v-model="form.telefono" type="tel" placeholder="11 6502-9146" required>
             </label>
           </div>
 
           <label class="field">
-            <span class="field__label mono">→ Email</span>
+            <span class="field__label">Email</span>
             <input v-model="form.email" type="email" placeholder="vos@email.com">
           </label>
 
           <div class="field-row">
             <label class="field">
-              <span class="field__label mono">→ Servicio *</span>
+              <span class="field__label">Servicio *</span>
               <div class="select-wrap">
                 <select v-model="form.servicio" required>
                   <option disabled value="">Elegí uno</option>
@@ -152,17 +143,16 @@ const channels = [
               </div>
             </label>
             <label class="field">
-              <span class="field__label mono">→ Zona / Barrio</span>
+              <span class="field__label">Zona / Barrio</span>
               <input v-model="form.zona" type="text" placeholder="CABA, Vicente López...">
             </label>
           </div>
 
           <label class="field">
-            <span class="field__label mono">→ Contános</span>
+            <span class="field__label">Contános</span>
             <textarea v-model="form.mensaje" rows="4" placeholder="Tipo de propiedad, m², qué problema notás..."></textarea>
           </label>
 
-          <!-- honeypot -->
           <input v-model="form.honey" type="text" tabindex="-1" autocomplete="off" class="honey" aria-hidden="true">
 
           <div class="form-card__footer">
@@ -171,7 +161,7 @@ const channels = [
                 Enviando<span class="mi mi--spin">progress_activity</span>
               </template>
               <template v-else-if="status === 'success'">
-                Mensaje enviado ✓
+                Mensaje enviado <span class="mi">check</span>
               </template>
               <template v-else>
                 Solicitar presupuesto
@@ -188,8 +178,8 @@ const channels = [
           <Motion
             v-if="status === 'error'"
             class="form-msg form-msg--err"
-            :initial="{ opacity: 0, y: 8 }"
-            :animate="{ opacity: 1, y: 0 }"
+            :initial="{ y: 8 }"
+            :animate="{ y: 0 }"
           >
             <span class="mi">error_outline</span>
             {{ errorMsg }}
@@ -197,8 +187,8 @@ const channels = [
           <Motion
             v-if="status === 'success'"
             class="form-msg form-msg--ok"
-            :initial="{ opacity: 0, y: 8 }"
-            :animate="{ opacity: 1, y: 0 }"
+            :initial="{ y: 8 }"
+            :animate="{ y: 0 }"
           >
             <span class="mi">check_circle</span>
             Recibimos tu pedido. Te contactamos en menos de 24 hs.
@@ -209,8 +199,8 @@ const channels = [
       <!-- Contact panel -->
       <Motion
         class="ctc__panel"
-        :initial="{ opacity: 0, y: 40 }"
-        :while-in-view="{ opacity: 1, y: 0 }"
+        :initial="{ y: 32 }"
+        :while-in-view="{ y: 0 }"
         :in-view-options="{ once: true, margin: '0px 0px -100px 0px' }"
         :transition="{ duration: 0.8, delay: 0.1 }"
       >
@@ -234,15 +224,15 @@ const channels = [
 
         <div class="card-foot">
           <div class="card-foot__bit">
-            <span class="mono">REG.</span>
-            <span class="display">730 / 988</span>
+            <span class="mono">Reg.</span>
+            <span class="display">730 · 988</span>
           </div>
           <div class="card-foot__bit">
-            <span class="mono">ZONA</span>
+            <span class="mono">Zona</span>
             <span class="display">AMBA</span>
           </div>
           <div class="card-foot__bit">
-            <span class="mono">HORARIO</span>
+            <span class="mono">Horario</span>
             <span class="display">L–S</span>
           </div>
         </div>
@@ -253,32 +243,11 @@ const channels = [
 
 <style scoped>
 .ctc {
-  padding: 7rem 0 6rem;
-  background:
-    radial-gradient(ellipse 600px 400px at 20% 0%, rgba(126, 211, 33, 0.08), transparent 60%),
-    var(--eco-ink);
+  padding: clamp(5rem, 9vw, 7.5rem) 0 6rem;
+  background: var(--eco-bone);
   position: relative;
+  overflow: hidden;
 }
-
-.ctc__head {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 3rem;
-  align-items: start;
-  margin-bottom: 4rem;
-}
-.act-mark { border-left: 2px solid var(--eco-lime); padding-left: 1.25rem; }
-.act-mark__num { font-size: clamp(4rem, 8vw, 7rem); color: var(--eco-lime); line-height: 0.8; display: block; }
-.act-mark__label { display: block; font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(244, 241, 232, 0.55); margin-top: 0.4rem; }
-
-.ctc__heading { padding-top: 0.75rem; }
-.ctc__title {
-  font-size: clamp(2.25rem, 5.5vw, 4.75rem);
-  margin: 1rem 0 1.5rem;
-  color: var(--eco-bone);
-}
-.ctc__title em { font-style: italic; color: var(--eco-lime); font-weight: 800; }
-.ctc__lede { max-width: 56ch; }
 
 .ctc__body {
   display: grid;
@@ -288,28 +257,32 @@ const channels = [
 
 /* Form card */
 .form-card {
-  background: var(--eco-deep);
-  border: 1px solid rgba(244, 241, 232, 0.1);
-  padding: clamp(1.5rem, 3vw, 2.5rem);
+  background: var(--eco-white);
+  border: 1px solid var(--eco-line);
+  border-radius: var(--r-lg);
+  padding: clamp(1.75rem, 3vw, 2.75rem);
+  box-shadow: var(--shadow-card);
   position: relative;
+  overflow: hidden;
 }
 .form-card::before {
   content: '';
   position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 4px;
-  background: var(--eco-lime);
+  left: 0; top: 0;
+  width: 6px;
+  height: 100%;
+  background: var(--eco-forest);
 }
 .form-card__head {
   display: flex;
   justify-content: space-between;
-  font-size: 0.625rem;
-  letter-spacing: 0.18em;
-  color: var(--eco-lime);
-  margin-bottom: 2rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px dashed rgba(244, 241, 232, 0.12);
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--eco-muted);
+  margin-bottom: 1.75rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px dashed var(--eco-line);
 }
 
 .field-row {
@@ -319,56 +292,51 @@ const channels = [
 }
 .field {
   display: block;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.1rem;
 }
 .field__label {
   display: block;
-  font-size: 0.6875rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--eco-lime);
-  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  color: var(--eco-ink);
+  margin-bottom: 0.45rem;
 }
 .field input,
 .field select,
 .field textarea {
   width: 100%;
-  background: var(--eco-ink);
-  border: 1px solid rgba(244, 241, 232, 0.12);
-  color: var(--eco-bone);
+  background: var(--eco-bone);
+  border: 1px solid var(--eco-line);
+  color: var(--eco-ink);
   font-family: var(--font-body);
   font-size: 1rem;
   padding: 0.85rem 1rem;
-  transition: border-color 0.25s, background 0.25s;
+  border-radius: 12px;
+  transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
   appearance: none;
-  border-radius: 0;
 }
-.field textarea {
-  resize: vertical;
-  min-height: 100px;
-  font-family: var(--font-body);
-}
+.field textarea { resize: vertical; min-height: 110px; }
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
   outline: none;
-  border-color: var(--eco-lime);
-  background: rgba(126, 211, 33, 0.04);
+  background: var(--eco-white);
+  border-color: var(--eco-forest);
+  box-shadow: 0 0 0 4px rgba(30, 122, 51, 0.12);
 }
 .field input::placeholder,
-.field textarea::placeholder {
-  color: rgba(244, 241, 232, 0.3);
-}
+.field textarea::placeholder { color: var(--eco-muted); }
 
 .select-wrap { position: relative; }
-.select-wrap select { padding-right: 2.5rem; }
+.select-wrap select { padding-right: 2.5rem; cursor: pointer; }
 .select-wrap__chev {
   position: absolute;
   right: 0.85rem;
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
-  color: var(--eco-lime);
+  color: var(--eco-forest);
 }
 
 .honey {
@@ -383,105 +351,100 @@ const channels = [
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
-  margin-top: 1.5rem;
+  margin-top: 1.25rem;
 }
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.625rem;
-  padding: 0.95rem 1.4rem;
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  border: 1px solid;
-  transition: all 0.25s;
-  cursor: pointer;
-}
-.btn:disabled { opacity: 0.7; cursor: progress; }
-.btn--primary {
-  background: var(--eco-lime);
-  color: var(--eco-ink);
-  border-color: var(--eco-lime);
-}
-.btn--primary:hover { background: var(--eco-lime-glow); border-color: var(--eco-lime-glow); }
-.btn--ghost {
-  background: transparent;
-  color: var(--eco-bone);
-  border-color: rgba(244, 241, 232, 0.25);
-}
-.btn--ghost:hover { border-color: var(--eco-lime); color: var(--eco-lime); }
-.mi--spin {
-  animation: spin 1s linear infinite;
-  margin-left: 0.3rem;
-}
+.mi--spin { animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .form-msg {
   margin-top: 1rem;
-  padding: 0.75rem 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
+  padding: 0.8rem 1rem;
+  font-size: 0.875rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  border-radius: 12px;
 }
 .form-msg--ok {
-  background: rgba(126, 211, 33, 0.12);
-  border: 1px solid var(--eco-lime);
-  color: var(--eco-lime);
+  background: rgba(30, 122, 51, 0.1);
+  color: var(--eco-forest-deep);
 }
 .form-msg--err {
-  background: rgba(194, 73, 42, 0.12);
-  border: 1px solid var(--eco-rust);
-  color: var(--eco-rust);
+  background: rgba(193, 73, 42, 0.1);
+  color: #B14924;
 }
 
 /* Panel */
 .ctc__panel {
-  background: linear-gradient(180deg, rgba(126, 211, 33, 0.06), transparent 50%), var(--eco-deep);
-  border: 1px solid rgba(126, 211, 33, 0.2);
-  padding: clamp(1.5rem, 3vw, 2.25rem);
+  background: var(--eco-ink);
+  color: var(--eco-bone);
+  border-radius: var(--r-lg);
+  padding: clamp(1.75rem, 3vw, 2.5rem);
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
 }
-.panel-head { margin-bottom: 2rem; }
-.panel-head__title {
-  font-size: clamp(1.5rem, 2.6vw, 2rem);
-  color: var(--eco-bone);
-  margin-top: 0.75rem;
-  max-width: 14ch;
+.ctc__panel::after {
+  content: '';
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(30, 122, 51, 0.35), transparent 65%);
+  top: -40px;
+  right: -60px;
+  pointer-events: none;
 }
 
-.channels { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+.panel-head { margin-bottom: 1.75rem; position: relative; z-index: 1; }
+.panel-head .eyebrow { color: var(--eco-leaf); }
+.panel-head .eyebrow::before { background: var(--eco-leaf); }
+.panel-head__title {
+  font-size: clamp(1.45rem, 2.5vw, 1.85rem);
+  color: var(--eco-bone);
+  margin-top: 0.75rem;
+  max-width: 16ch;
+}
+
+.channels {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
 .channel {
   display: grid;
   grid-template-columns: auto 1fr auto;
   gap: 1rem;
   align-items: center;
-  padding: 1rem 1.1rem;
-  border: 1px solid rgba(244, 241, 232, 0.08);
-  background: var(--eco-ink);
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(247, 244, 236, 0.12);
+  background: rgba(247, 244, 236, 0.04);
+  border-radius: 14px;
   transition: all 0.25s;
 }
 .channel:hover {
-  border-color: var(--eco-lime);
-  background: rgba(126, 211, 33, 0.05);
+  border-color: var(--eco-leaf);
+  background: rgba(30, 122, 51, 0.15);
+  transform: translateX(2px);
 }
 .channel__icon {
   width: 38px;
   height: 38px;
-  background: rgba(126, 211, 33, 0.12);
-  color: var(--eco-lime);
+  background: rgba(30, 122, 51, 0.25);
+  color: var(--eco-leaf);
   font-size: 1.25rem;
+  border-radius: 10px;
 }
-.channel__txt { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+.channel__txt { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
 .channel__label {
   font-size: 0.625rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(244, 241, 232, 0.5);
+  color: rgba(247, 244, 236, 0.55);
 }
 .channel__val {
   font-size: 0.9375rem;
@@ -492,9 +455,10 @@ const channels = [
   white-space: nowrap;
 }
 .channel__arrow {
-  color: var(--eco-lime);
-  opacity: 0.5;
+  color: var(--eco-leaf);
+  opacity: 0.6;
   transition: opacity 0.25s, transform 0.25s;
+  font-size: 1rem;
 }
 .channel:hover .channel__arrow {
   opacity: 1;
@@ -504,26 +468,29 @@ const channels = [
 .card-foot {
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  border-top: 1px dashed rgba(244, 241, 232, 0.1);
+  border-top: 1px dashed rgba(247, 244, 236, 0.18);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.75rem;
+  position: relative;
+  z-index: 1;
 }
-.card-foot__bit { display: flex; flex-direction: column; gap: 0.2rem; }
+.card-foot__bit { display: flex; flex-direction: column; gap: 0.25rem; }
 .card-foot__bit .mono {
   font-size: 0.625rem;
-  letter-spacing: 0.18em;
-  color: rgba(244, 241, 232, 0.5);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(247, 244, 236, 0.5);
 }
 .card-foot__bit .display {
-  font-size: clamp(1.25rem, 2vw, 1.625rem);
-  color: var(--eco-lime);
+  font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+  color: var(--eco-leaf);
   line-height: 1;
+  font-weight: 600;
   letter-spacing: -0.01em;
 }
 
 @media (max-width: 980px) {
-  .ctc__head { grid-template-columns: 1fr; gap: 1.5rem; }
   .ctc__body { grid-template-columns: 1fr; }
   .field-row { grid-template-columns: 1fr; gap: 0; }
 }
